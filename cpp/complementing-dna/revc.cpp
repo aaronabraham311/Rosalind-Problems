@@ -10,6 +10,8 @@ int main()
     
     cin >> sequence; // Getting DNA sequence
     
+    reverse(sequence.begin(), sequence.end()); // Reversing string
+    
     // Goes through each instance and replaces letters
     for (int i = 0; i < sequence.length(); i ++)
     {
