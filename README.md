@@ -1,2 +1,2 @@
-# Rosalind-Problems
-Solving problems from Rosalind using C++, R and Python
+# Rosalind Problems
+This repo will store practice problems from rosalind.info. All scripts and programs will be named according to the ID of the problem solved. 
