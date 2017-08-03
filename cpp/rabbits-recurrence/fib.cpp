@@ -32,6 +32,6 @@ int recurrence (int n, int k)
     }
     else
     {
-        return recurrence(n-1, k) + (recurrence(n - 2, k) * k)
+        return recurrence(n-1, k) + (recurrence(n - 2, k) * k);
     }
 }
