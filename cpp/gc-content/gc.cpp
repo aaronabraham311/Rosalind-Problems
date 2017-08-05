@@ -1,28 +1,52 @@
 // Declaring libraries
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
+
+float gcPercent (string input);
 
 // Program finding GC percentage, implement in function
 int main()
 {
-    string userInput;
-    float gcNum = 0;
+    string gcInput;
+    string biggestName;
+    string tempName;
+    float biggestGC = 0;
     
-    // Getting string input
-    cin >> userInput;
+    ifstream fileInput ("rosalind_gc.txt");
     
-    // Finding number of 'G' or 'C' characters there are
-    for (int i = 0; i < userInput.length(); i ++)
+    while (!fileInput.eof())
     {
-        if (userInput[i] == 'G' || userInput[i] == 'C')
+        getline(fileInput, tempName);
+        getline(fileInput, gcInput);
+        
+        if (gcPercent(gcInput) > biggestGC)
         {
-            gcNum ++;  
+            biggestGC = gcPercent(gcInput);
+            biggestName = tempName;
         }
     }
     
-    cout << "GC percentage: " << (gcNum/userInput.length()) * 100 << endl; // Outputting percentage
+    cout << biggestName << endl;
+    cout << biggestGC << endl;
     
     return 0;
+}
+
+float gcPercent (string input)
+{
+    float gcNum = 0;
+    
+    // Finding number of 'G' or 'C' characters there are
+    for (int i = 0; i < input.length(); i ++)
+    {
+        if (input[i] == 'G' || input[i] == 'C')
+        {
+            gcNum ++;
+        }
+    }
+    
+    return (gcNum/input.length()) * 100;
 }
