@@ -9,7 +9,14 @@ using namespace std;
 int main()
 {
     string rnaSequence, aaSequence, codon;
-    string codonArray[20][2]; // Put in list
+    string codonArray[20][2] =
+    {
+        {"UUU", "F"},
+        {"UUC", "F"},
+        {"UUA", "L"},
+        {"UUG", "L"},
+        {"UCU", "S"}
+    }; // Put in list
     int answer[100]; // Stores answer
     
     cin >> rnaSequence;
