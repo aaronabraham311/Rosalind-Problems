@@ -1,31 +1,52 @@
 // INCOMPLETE
-
-#include <iostream> 
+#include <iostream>
 #include <string>
+
 using namespace std;
 
 // Logic: Substrings of 3 --> compare to 2D array that takes codon and gives protein letter --> puts in new string using .append()
 
 int main()
 {
-    string rnaSequence, aaSequence, codon;
-    string codonArray[20][2] =
-    {
-        {"UUU", "F"},
-        {"UUC", "F"},
-        {"UUA", "L"},
-        {"UUG", "L"},
-        {"UCU", "S"}
-    }; // Put in list
-    int answer[100]; // Stores answer
+    string rnaSequence;
+    string protein;
+    string temp;
     
     cin >> rnaSequence;
     
+    cout << rnaSequence.substr(0, 3) << endl;
+    
     for (int i = 0; i < rnaSequence.length(); i += 3)
     {
-        codon = rnaSequence[i] + rnaSequence[i + 1] + rnaSequence[i + 2]
+        temp = rnaSequence.substr(i,3);
         
+        if (temp == "UUU" || temp == "UUC")
+        {
+            protein += "F";
+        }
+        else if (temp == "UUL" || temp == "UUG")
+        {
+            protein += "L";
+        }
+        else if (temp == "UCU" || temp == "UCC" || temp == "UCA" || temp == "UCG")
+        {
+            protein += "S";
+        }
+        else if (temp == "UAU" || temp == "UAC") // Skipped stop codons
+        {
+            protein += "Y";
+        }
+        else if (temp == "UGU" || temp == "UGC")
+        {
+            protein += "C";
+        }
+        else if (temp == "UGG")
+        {
+            protein += "W";
+        }
     }
+    
+    cout << protein << endl;
     
     return 0;
 }
