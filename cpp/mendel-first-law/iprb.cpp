@@ -16,12 +16,20 @@ int main()
     cin >> k >> m >> n;
     sum = k + m + n;
     
-    cout << 1 - 0.25 * probs(m, m, sum) - 0.5 * probs(m, n, sum) - probs(n, n, sum) << endl; // Outputs chance
-       
+    cout << 1 - (0.25 * probs(m, m, sum)) - (0.5 * probs(m, n, sum)) - (probs(n, n, sum)) << endl; // Outputs chance
+    
+    
     return 0;
 }
 
 float probs (float firstIndividual, float secondIndividual, float sum)
 {
-    return (firstIndividual/sum) * (secondIndividual /sum) ;
+    if (firstIndividual == secondIndividual)
+    {
+        return (firstIndividual/sum) * ((secondIndividual - 1)/(sum - 1));
+    }
+    else
+    {
+        return (firstIndividual/sum) * (secondIndividual/(sum - 1));
+    }
 }
