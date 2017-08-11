@@ -14,6 +14,26 @@ int main()
     string biggestName;
     string tempName;
     float biggestGC = 0;
+    string random;
+    
+    ifstream fileInput ("rosalind_gc.txt");
+    
+    while (!fileInput.eof())
+    {
+        fileInput >> random;
+        
+        if (random[0] == '>')
+        {
+            tempName = random.substr(1, random.length()); // Work on file reading paragraph
+        }
+    }
+    
+    cout << tempName << endl;
+    
+    /*string gcInput;
+    string biggestName;
+    string tempName;
+    float biggestGC = 0;
     
     ifstream fileInput ("rosalind_gc.txt");
     
@@ -30,7 +50,7 @@ int main()
     }
     
     cout << biggestName << endl;
-    cout << biggestGC << endl;
+    cout << biggestGC << endl; */
     
     return 0;
 }
