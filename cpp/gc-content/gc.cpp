@@ -20,55 +20,38 @@ int main()
     
     ifstream input("rosalind_gc.txt");
     
-    for (int i = 0; getline(input, line).good();i ++ )
+    while (getline(input, line).good())
     {
-        if (line.empty() || line[0] == '>')
+        if (line[0] == '>')
         {
-            if(!name.empty())
+            if (!name.empty())
             {
                 listNames[i] = name;
                 listContent[i] = content;
-                
-            }
-            
-            if (!line.empty())
-            {
-                name = line.substr(1);
-            }
-            
-            content.clear();
-        }
-        else if (!name.empty())
-        {
-            if (line.find(' ') != string::npos)
-            {
                 name.clear();
                 content.clear();
+                i ++;
             }
-            else
-            {
-                content += line;
-            }
+            
+            name = line.substr(1);
+        }
+        else 
+        {
+            content += line;   
         }
     }
     
-    if (!name.empty())
-    {
-        listNames[i] = name;
-        listContent[i] = content;
-    }
-    
-    /*for (int i = 0; i < 100; i ++)
+    for (int i = 0; i < 100; i ++)
     {
         if (gcPercent(listContent[i]) > biggestGC)
         {
             biggestGC = gcPercent(listContent[i]);
             index = i;
         }
-    } */
+    }
     
     
-    //cout << listNames[index] << endl << biggestGC << endl;
+    cout << listNames[index] << endl << biggestGC << endl;
     
     return 0;
 }
