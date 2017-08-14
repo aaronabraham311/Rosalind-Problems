@@ -7,50 +7,68 @@ using namespace std;
 
 float gcPercent (string input);
 
+// IDEA: Getline --> see if line[0] is '>' --> if so, put line as names (use substr) --> else, add to content --> if next line begins with '>', go to next index!
+
+
 // Program finding GC percentage, implement in function
 int main()
 {
-    string gcInput;
-    string biggestName;
-    string tempName;
+    string line, name, content;
+    string listNames[100], listContent[100];
     float biggestGC = 0;
-    string random;
+    int index, i = 0;
     
-    ifstream fileInput ("rosalind_gc.txt");
+    ifstream input("rosalind_gc.txt");
     
-    while (!fileInput.eof())
+    for (int i = 0; getline(input, line).good();i ++ )
     {
-        fileInput >> random;
-        
-        if (random[0] == '>')
+        if (line.empty() || line[0] == '>')
         {
-            tempName = random.substr(1, random.length()); // Work on file reading paragraph
+            if(!name.empty())
+            {
+                listNames[i] = name;
+                listContent[i] = content;
+                
+            }
+            
+            if (!line.empty())
+            {
+                name = line.substr(1);
+            }
+            
+            content.clear();
+        }
+        else if (!name.empty())
+        {
+            if (line.find(' ') != string::npos)
+            {
+                name.clear();
+                content.clear();
+            }
+            else
+            {
+                content += line;
+            }
         }
     }
     
-    cout << tempName << endl;
-    
-    /*string gcInput;
-    string biggestName;
-    string tempName;
-    float biggestGC = 0;
-    
-    ifstream fileInput ("rosalind_gc.txt");
-    
-    while (!fileInput.eof())
+    if (!name.empty())
     {
-        getline(fileInput, tempName);
-        getline(fileInput, gcInput);
-        
-        if (gcPercent(gcInput) > biggestGC)
-        {
-            biggestGC = gcPercent(gcInput);
-            biggestName = tempName;
-        }
+        listNames[i] = name;
+        listContent[i] = content;
     }
     
-    cout << biggestName << endl;
-    cout << biggestGC << endl; */
+    /*for (int i = 0; i < 100; i ++)
+    {
+        if (gcPercent(listContent[i]) > biggestGC)
+        {
+            biggestGC = gcPercent(listContent[i]);
+            index = i;
+        }
+    } */
+    
+    
+    //cout << listNames[index] << endl << biggestGC << endl;
     
     return 0;
 }
