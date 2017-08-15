@@ -7,25 +7,24 @@ using namespace std;
 
 float gcPercent (string input);
 
-// IDEA: Getline --> see if line[0] is '>' --> if so, put line as names (use substr) --> else, add to content --> if next line begins with '>', go to next index!
-
-
 // Program finding GC percentage, implement in function
 int main()
 {
+    // Declaring all variables
     string line, name, content;
     string listNames[100], listContent[100];
     float biggestGC = 0;
     int index, i = 0;
     
-    ifstream input("rosalind_gc.txt");
+    ifstream input("rosalind_gc.txt"); // Getting file into ifstream object
     
-    while (getline(input, line).good())
+    while (getline(input, line)) // Runs loop until end of file. Continually collects lines
     {
-        if (line[0] == '>')
+        if (line[0] == '>') // If line starts with '>', it must be a line containing the DNA sequence name
         {
-            if (!name.empty())
+            if (!name.empty()) // If name is already full, it indicates you are on the next DNA sequence
             {
+                // Stores temporary variable in array, clears all temporary variables, and starts next DNA sequence
                 listNames[i] = name;
                 listContent[i] = content;
                 name.clear();
@@ -33,15 +32,21 @@ int main()
                 i ++;
             }
             
-            name = line.substr(1);
+            name = line.substr(1); // Gets name
         }
-        else 
+        else
         {
-            content += line;   
+            content += line; // If not beginning with '>', it is a DNA sequence. Stores it
         }
     }
     
-    for (int i = 0; i < 100; i ++)
+    if (!name.empty() || !content.empty()) // Used to account for last DNA sequences
+    {
+        listNames[i] = name;
+        listContent[i] = content;
+    }
+    
+    for (int i = 0; i < 100; i ++) // Finds biggest GC percentage and corresponding name
     {
         if (gcPercent(listContent[i]) > biggestGC)
         {
@@ -51,7 +56,7 @@ int main()
     }
     
     
-    cout << listNames[index] << endl << biggestGC << endl;
+    cout << listNames[index] << endl << biggestGC << endl; // Outputs name and percentage
     
     return 0;
 }
