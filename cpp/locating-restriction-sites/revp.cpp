@@ -1,72 +1,74 @@
-// INCOMPLETE
-
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
-bool palindromeCheck (string input);
+string complement(string input);
 
-int main ()
+int main()
 {
-    char firstChar, lastChar;
-    bool palindromeTrue = false;
-    int biggestCount = 0;
+    string dnaString;
+    string complementString;
+    int index1, index2, length;
     
-    string input;
+    getline(cin, dnaString);
     
-    getline(cin, input);
+    length = dnaString.length();
+    complementString = complement(dnaString);
     
-    int length = input.length();
+    cout << dnaString << endl << complementString << endl;
     
-    for (int index1 = 0; index1 < length; index1 ++)
+    /*
+    for (index1 = 0; index1 < length; index1 ++)
     {
-        firstChar = input.at(index1);
-        
-        for (int index2 = index1 + 1; index2 < length; index2 ++)
+        if (dnaString[index1] == complementString[index1])
         {
-            lastChar = input.at(index2);
-            
-            if (firstChar == lastChar)
+            for (index2 = index1; index2 < length; index2 ++)
             {
-                string input1 = input.substr(index1, index2 - index1 + 1);
-                
-                palindromeTrue = palindromeCheck (input1);
-                
-                if (palindromeTrue == true && (index2- index1 >= 4 && index2 - index1 <= 12) )
+                if(dnaString[index2 + 1] != complementString[index2 + 1])
                 {
-                    cout << index1 + 1 << " " << index2 - index1 << endl;
+                       if ((index2 - index1) < 4 || (index2 - index1) > 12)
+                       {
+                           break;
+                       }
+                       else 
+                       {
+                            cout << index1 << " " << index2 - index1 << endl;   
+                       }
                 }
             }
         }
-    }
+    }*/
     
-    return 0;
+    return 0;   
 }
 
-bool palindromeCheck (string input)
+string complement(string input)
 {
-    bool palindrome = true;
-    char firstCharachter, lastCharachter;
+    string sequence = input;
+    reverse(sequence.begin(), sequence.end()); // Reversing string
     
-    int stringLength = input.length();
-    int lastCharIndex = stringLength - 1;
-    
-    for (int index = 0; index <= lastCharIndex; index++)
+    // Goes through each instance and replaces letters
+    for (int i = 0; i < sequence.length(); i ++)
     {
-        firstCharachter = input.at(index);
-        lastCharachter = input.at(lastCharIndex);
-        
-        if (firstCharachter == lastCharachter)
+        if (sequence[i] == 'A')
         {
-            lastCharIndex --;
+            sequence.replace(i, 1, "T");   
         }
-        else
+        else if (sequence[i] == 'T')
         {
-            palindrome = false;
-            break;
+            sequence.replace(i, 1, "A");
+        }
+        else if (sequence[i] == 'C')
+        {
+            sequence.replace(i, 1, "G");
+        }
+        else if (sequence[i] == 'G')
+        {
+            sequence.replace(i, 1, "C");
         }
     }
     
-    return palindrome;
+    return sequence;
 }
