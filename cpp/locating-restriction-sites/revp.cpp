@@ -1,10 +1,12 @@
+// INCOMPLETE
 #include <iostream>
 #include <string>
 #include <algorithm>
 
 using namespace std;
 
-string complement(string input);
+bool complementCheck(string check);
+char complementCharacter(char input);
 
 int main()
 {
@@ -15,38 +17,33 @@ int main()
     getline(cin, dnaString);
     
     length = dnaString.length();
-    complementString = complement(dnaString);
     
-    cout << dnaString << endl << complementString << endl;
-    
-    /*
-    for (index1 = 0; index1 < length; index1 ++)
+    for (int i = 0; i < length; i ++)
     {
-        if (dnaString[index1] == complementString[index1])
+        for (int j = i + 1; j < length; j ++)
         {
-            for (index2 = index1; index2 < length; index2 ++)
+            if (dnaString[i] == complementCharacter(dnaString[j]))
             {
-                if(dnaString[index2 + 1] != complementString[index2 + 1])
+                if (j - i >= 4 || j - i <= 12)
                 {
-                       if ((index2 - index1) < 4 || (index2 - index1) > 12)
-                       {
-                           break;
-                       }
-                       else 
-                       {
-                            cout << index1 << " " << index2 - index1 << endl;   
-                       }
+                    complementString = dnaString.substr(i, j - i);
+                    
+                    if (complementCheck(complementString) == true)
+                    {
+                        cout << i << " " << j - i << endl;
+                    }
                 }
             }
         }
-    }*/
-    
-    return 0;   
+    }
+    return 0;
 }
 
-string complement(string input)
+// Checks reverse complement palindrome
+bool complementCheck(string check)
 {
-    string sequence = input;
+    string sequence = check;
+    bool test = true;
     reverse(sequence.begin(), sequence.end()); // Reversing string
     
     // Goes through each instance and replaces letters
@@ -54,7 +51,7 @@ string complement(string input)
     {
         if (sequence[i] == 'A')
         {
-            sequence.replace(i, 1, "T");   
+            sequence.replace(i, 1, "T");
         }
         else if (sequence[i] == 'T')
         {
@@ -70,5 +67,37 @@ string complement(string input)
         }
     }
     
-    return sequence;
+    // Compares reverse complement string with the original substring
+    for (int i = 0; i < sequence.length(); i ++)
+    {
+        if (sequence[i] != check[i])
+        {
+            test = false;
+            break;
+        }
+    }
+    
+    return test;
+}
+
+char complementCharacter(char input)
+{
+    if (input == 'A')
+    {
+        return 'T';
+    }
+    else if (input == 'T')
+    {
+        return 'A';
+    }
+    else if (input == 'C')
+    {
+        return 'G';
+    }
+    else if (input == 'G')
+    {
+        return 'C';
+    }
+    
+    return 'A';
 }
