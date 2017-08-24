@@ -1,118 +1,51 @@
+// Including all libraries
 #include <iostream>
+#include <fstream>
 #include <string>
+#include <map>
 
 using namespace std;
 
-// Logic: Substrings of 3 --> compare to 2D array that takes codon and gives protein letter --> puts in new string using .append()
+// Making mapping function that puts external codon table into C++ dictionary
+map <string, string> make_map(const char* path = "codon_table.txt")
+{
+    map <string, string> map;
+    
+    fstream table(path);
+    string codon, aminoAcid;
+    
+    while (table >> codon >> aminoAcid)
+    {
+        map.emplace(codon, aminoAcid);
+    }
+    
+    return map;
+}
 
 int main()
 {
-    string rnaSequence;
-    string protein;
-    string temp;
+    string rnaSequence, protein;
+    map <string, string> codonTable = make_map();
     
-    cin >> rnaSequence;
+    getline(cin,rnaSequence); // Gets input
     
-    for (int i = 0; i < rnaSequence.length(); i += 3)
+    for (int i = 0; i < rnaSequence.length(); i += 3) // Passes codon to function
     {
-        temp = rnaSequence.substr(i,3);
+        string substring = rnaSequence.substr(i, 3);
         
-        if (temp == "UUU" || temp == "UUC")
+        for (auto j = codonTable.begin(); j != codonTable.end(); j ++)
         {
-            protein += "F";
-        }
-        else if (temp == "UUL" || temp == "UUG")
-        {
-            protein += "L";
-        }
-        else if (temp == "UCU" || temp == "UCC" || temp == "UCA" || temp == "UCG")
-        {
-            protein += "S";
-        }
-        else if (temp == "UAU" || temp == "UAC")
-        {
-            protein += "Y";
-        }
-        else if (temp == "UGU" || temp == "UGC")
-        {
-            protein += "C";
-        }
-        else if (temp == "UGG")
-        {
-            protein += "W";
-        }
-        else if (temp == "CUU" || temp == "CUC" || temp == "CUA" || temp == "CUG")
-        {
-            protein += "L";
-        }
-        else if (temp == "CCU" || temp == "CCC" || temp == "CCA" || temp == "CCG")
-        {
-            protein += "P";
-        }
-        else if (temp == "CAU" || temp == "CAC")
-        {
-            protein += "H";
-        }
-        else if (temp == "CAA" || temp == "CAG")
-        {
-            protein += "Q";
-        }
-        else if (temp == "CGU" || temp == "CGC" || temp == "CGA" || temp == "CGG")
-        {
-            protein +=  "R";
-        }
-        else if (temp == "AUU" || temp == "AUC" || temp == "AUA")
-        {
-            protein += "I";
-        }
-        else if (temp == "AUG")
-        {
-            protein += "M";
-        }
-        else if (temp == "ACU" || temp == "ACC" || temp == "ACA" || temp == "ACG")
-        {
-            protein += "T";
-        }
-        else if (temp == "AAU" || temp == "AAC")
-        {
-            protein += "N";
-        }
-        else if (temp == "AAA" || temp == "AAG")
-        {
-            protein += "K";
-        }
-        else if (temp == "AGU" || temp == "AGC")
-        {
-            protein += "S";
-        }
-        else if (temp == "AGA" || temp == "AGG")
-        {
-            protein += "R";
-        }
-        else if (temp == "GUA" || temp == "GUU" || temp == "GUG" || temp == "GUC")
-        {
-            protein += "V";
-        }
-        else if (temp == "GCU" || temp == "GCG" || temp == "GCA" || temp == "GCC")
-        {
-            protein += "A";
-        }
-        else if (temp == "GAU" || temp == "GAC")
-        {
-            protein += "D";
-        }
-        else if (temp == "GAA" || temp == "GAG")
-        {
-            protein += "E";
-        }
-        else if (temp == "GGU" || temp == "GGA" || temp == "GGC" || temp == "GGG")
-        {
-            protein += "G";
-        }
-        else if (temp == "UAA" || temp == "UAG" || temp == "UGA")
-        {
-            cout << protein << endl;
-            protein.clear();
+            if (j -> first == substring)
+            {
+                if ( j -> second == "Stop")
+                {
+                    cout << endl;
+                }
+                else
+                {
+                    protein += j -> second;
+                }
+            }
         }
     }
     
